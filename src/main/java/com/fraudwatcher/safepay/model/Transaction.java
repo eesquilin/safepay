@@ -1,13 +1,18 @@
 package com.fraudwatcher.safepay.model;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Entity
+@Data
+@AllArgsConstructor
 public class Transaction {
     
     @Id
@@ -15,8 +20,8 @@ public class Transaction {
     Long id;
 
     Long userId;
-    float amount;
-    Date timestamp; // Optimize datetime format
+    BigDecimal amount;
+    LocalDateTime timestamp; 
     String location;
     String merchant; // TODO Create an enum to enumerate merchants
 
