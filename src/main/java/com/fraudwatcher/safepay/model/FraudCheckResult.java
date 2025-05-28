@@ -26,7 +26,7 @@ public class FraudCheckResult {
     
     boolean isFraud;
     
-    String reasons; // TODO Create an enum with reasons to standarize logic for denial/acceptance reason. 
+    String reasons; // TODO Create an enum with reasons to standardize logic for denial/acceptance reason.
     
     LocalDateTime checkedAt;
 

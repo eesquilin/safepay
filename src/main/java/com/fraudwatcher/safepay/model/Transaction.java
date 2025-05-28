@@ -22,6 +22,7 @@ public class Transaction {
     Long userId;
     BigDecimal amount;
     LocalDateTime timestamp; 
+    TransactionType type;
     String location;
     String merchant; // TODO Create an enum to enumerate merchants
 
