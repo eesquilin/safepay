@@ -15,10 +15,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
     
     List<Transaction> findByUserId(Long userId);
 
-    List<Transaction> findByUserIdAndTimestampBetweenList(Long userId, LocalDateTime start, LocalDateTime end);
+    List<Transaction> findByUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end);
 
-    List<Transaction> findByUserIdAndAmountBetweenList(Long userId, BigDecimal min, BigDecimal max);
+    List<Transaction> findByUserIdAndAmountBetween(Long userId, BigDecimal min, BigDecimal max);
 
-    List<Transaction> findByUserIdAndTransactionTypeList(Long userId, TransactionType type);
+    List<Transaction> findByUserIdAndType(Long userId, TransactionType type);
     
 }

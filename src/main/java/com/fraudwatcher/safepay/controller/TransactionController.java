@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fraudwatcher.safepay.model.Transaction;
 import com.fraudwatcher.safepay.service.TransactionService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -26,7 +27,7 @@ public class TransactionController {
     }
 
     @GetMapping("/{userId}")
-    public List<Transaction> getMethodName(@RequestParam Long userId) {
+    public List<Transaction> getMethodName(@PathVariable Long userId) {
         return transactionService.getTransactionByUserId(userId);
     }
     

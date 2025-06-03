@@ -2,8 +2,6 @@ package com.fraudwatcher.safepay.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,7 @@ public class TransactionService {
     }
 
     //get transactions by user and transaction type
-    public List<Transaction> getByUserIdAndTransactionType(Long userId, TransactionType type) {
-        return transactionRepository.findByUserIdAndTransactionTypeList(userId, type);
+    public List<Transaction> getByUserIdAndType(Long userId, TransactionType type) {
+        return transactionRepository.findByUserIdAndType(userId, type);
     }
 }
