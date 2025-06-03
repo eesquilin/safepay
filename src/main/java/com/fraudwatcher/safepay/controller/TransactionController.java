@@ -11,6 +11,9 @@ import com.fraudwatcher.safepay.service.TransactionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -31,6 +34,10 @@ public class TransactionController {
         return transactionService.getTransactionByUserId(userId);
     }
     
+    @PostMapping
+    public Transaction postTransaction(@RequestBody Transaction transaction) {
+        return transactionService.createTransaction(transaction);
+    }
     
     
    
