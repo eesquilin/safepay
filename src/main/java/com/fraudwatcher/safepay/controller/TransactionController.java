@@ -21,15 +21,16 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @GetMapping
+    @GetMapping //Tested
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
-    @GetMapping("/{userId}")
-    public List<Transaction> getMethodName(@PathVariable Long userId) {
+    @GetMapping("user/{userId}") //Tested
+    public List<Transaction> getTransactionByUserId(@PathVariable Long userId) {
         return transactionService.getTransactionByUserId(userId);
     }
+    
     
     
    
