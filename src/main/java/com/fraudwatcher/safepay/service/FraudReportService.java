@@ -9,7 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +25,6 @@ public class FraudReportService {
 
         FraudReport report = new FraudReport();
         report.setDetectedAt(LocalDateTime.now());
-        report.setTransactionId(transaction.getId());
         report.setUserId(transaction.getUserId());
         report.setReason(reason);
         

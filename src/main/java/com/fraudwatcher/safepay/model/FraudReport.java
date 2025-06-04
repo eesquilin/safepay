@@ -18,7 +18,7 @@ public class FraudReport {
 
     @OneToOne
     @JoinColumn(name = "transaction_id")
-    Long transactionId;
+    Transaction transaction;
 
 
     Long userId;
