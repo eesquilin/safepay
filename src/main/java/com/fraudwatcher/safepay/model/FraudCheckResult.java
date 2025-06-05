@@ -29,6 +29,9 @@ public class FraudCheckResult {
     
     LocalDateTime checkedAt;
 
+    public FraudCheckResult(boolean b, String highValueTransaction) {
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
