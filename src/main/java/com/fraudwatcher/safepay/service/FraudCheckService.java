@@ -1,6 +1,7 @@
 package com.fraudwatcher.safepay.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,26 @@ public class FraudCheckService {
 
     public FraudCheckResult evaluateTransaction(Long transactionId) {
 
-        List<String> reasonList = new ArrayList<>();
-
         Transaction transaction = transactionRepository.findById(transactionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Transaction with ID: " + transactionId + " not found."));
 
-        //Rule $5000 withdrawal limit                
-//        if (currentTransaction.getType() == TransactionType.WITHDRAWAL
-//                && currentTransaction.getAmount().compareTo(BigDecimal.valueOf(5000)) > 0) {
-//            reasonList.add("Transaction amount exceeds limit.");
-//        }
+        List<String> reasonList = new ArrayList<>();
 
         // Add rules below this line
 
-//        boolean isFraud = !reasonList.isEmpty();
+        if (transaction.getAmount().compareTo(BigDecimal.valueOf(10000)) > 0) {
+            reasonList.add("High value transaction.");
+        }
 
-        FraudCheckResult result = runRules(transaction);
+        // Add rules above this line
 
+        FraudCheckResult result = new FraudCheckResult();
 
+        result.setTransaction(transaction);
+        result.setCheckedAt(LocalDateTime.now());
+        result.setReasons(reasonList);
+        result.setFraud(!reasonList.isEmpty());
 
         fraudCheckRepository.save(result);
 
@@ -53,13 +55,4 @@ public class FraudCheckService {
 
     }
 
-    private FraudCheckResult runRules(Transaction transaction) {
-        //Rules below this line.
-        if (transaction.getAmount().compareTo(BigDecimal.valueOf(10000)) > 0){
-            return new FraudCheckResult(true,"High Value Transaction");
-        }
-
-        //Add rules above this line.
-        else return new FraudCheckResult(false, "No signs of fraud.");
-    }
 }

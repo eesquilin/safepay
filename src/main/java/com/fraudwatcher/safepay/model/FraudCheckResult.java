@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,11 +26,11 @@ public class FraudCheckResult {
     
     boolean isFraud;
     
-    String reasons; // TODO Create an enum with reasons to standardize logic for denial/acceptance reason.
+    List<String> reasons; // TODO Create an enum with reasons to standardize logic for denial/acceptance reason.
     
     LocalDateTime checkedAt;
 
-    public FraudCheckResult(boolean b, String highValueTransaction) {
+    public FraudCheckResult(boolean isFraud, String reason) {
     }
 
     @Override
