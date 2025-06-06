@@ -52,5 +52,5 @@ Core transaction and fraud detection logic is implemented, but features and rule
 
 ---
 
-[!NOTE]
-This project uses an in-memory H2 database by default. All data is lost on restart.
+>[!NOTE]
+>This project uses an in-memory H2 database by default. All data is lost on restart.
