@@ -3,6 +3,8 @@ package com.fraudwatcher.safepay.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,8 +36,9 @@ public class TransactionController {
     }
     
     @PostMapping
-    public Transaction postTransaction(@RequestBody Transaction transaction) {
-        return transactionService.createTransaction(transaction);
+    public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction) {
+        Transaction createdTransaction = transactionService.createTransaction(transaction);
+        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }
     
     

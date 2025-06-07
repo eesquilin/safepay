@@ -26,8 +26,8 @@ public class FraudReportService {
         FraudReport report = new FraudReport();
         report.setDetectedAt(LocalDateTime.now());
         report.setUserId(transaction.getUserId());
-        report.setReason(reason);
-        
+        report.setReason(reason); // TODO Relate it OneToOne with FraudCheckResult in the model.
+
         return fraudReportRepository.save(report);
 
     }
