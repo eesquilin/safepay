@@ -2,7 +2,6 @@ package com.fraudwatcher.safepay.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
@@ -13,11 +12,14 @@ import com.fraudwatcher.safepay.repository.TransactionRepository;
 @Service
 public class TransactionService {
     
-    @Autowired
-    TransactionRepository transactionRepository;
+    final TransactionRepository transactionRepository;
 
-    @Autowired
-    FraudCheckService fraudCheckService;
+    final FraudCheckService fraudCheckService;
+
+    TransactionService(TransactionRepository transactionRepository, FraudCheckService fraudCheckService) {
+        this.transactionRepository = transactionRepository;
+        this.fraudCheckService = fraudCheckService;
+    }
 
     public List<Transaction> getAllTransactions(){
         return transactionRepository.findAll();

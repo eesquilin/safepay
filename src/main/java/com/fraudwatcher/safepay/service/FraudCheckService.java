@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
@@ -17,14 +16,17 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class FraudCheckService {
 
-    @Autowired
-    FraudCheckResultRepository fraudCheckRepository;
+    final FraudCheckResultRepository fraudCheckRepository;
 
-    @Autowired
-    TransactionRepository transactionRepository;
+    final TransactionRepository transactionRepository;
 
-    @Autowired
-    FraudReportService fraudReportService;
+    final FraudReportService fraudReportService;
+
+    FraudCheckService(FraudReportService fraudReportService, TransactionRepository transactionRepository, FraudCheckResultRepository fraudCheckRepository) {
+        this.fraudReportService = fraudReportService;
+        this.transactionRepository = transactionRepository;
+        this.fraudCheckRepository = fraudCheckRepository;
+    }
 
     public FraudCheckResult evaluateTransaction(Long transactionId) {
 
@@ -50,6 +52,8 @@ public class FraudCheckService {
         result.setFraud(!reasonList.isEmpty());
 
         fraudCheckRepository.save(result);
+
+        if (result.isFraud()){fraudReportService.createFraudReport( transactionId, String.valueOf(reasonList));}
 
         return result;
 

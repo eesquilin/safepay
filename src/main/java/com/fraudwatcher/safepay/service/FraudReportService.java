@@ -16,8 +16,11 @@ public class FraudReportService {
 
     @Autowired
     FraudReportRepository fraudReportRepository;
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
+
+    FraudReportService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
     public FraudReport createFraudReport(Long transactionId, String reason) {
         Transaction transaction = transactionRepository.findById(transactionId)
