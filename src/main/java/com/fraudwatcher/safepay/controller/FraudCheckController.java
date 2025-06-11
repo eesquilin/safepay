@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/api/fraud-check")
+@RequestMapping("/fraud-checks")
 public class FraudCheckController {
     
     private final  FraudCheckService fraudCheckService;

@@ -17,6 +17,7 @@ public class FraudReportService {
     @Autowired
     FraudReportRepository fraudReportRepository;
     private final TransactionRepository transactionRepository;
+    
 
     FraudReportService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
@@ -29,7 +30,8 @@ public class FraudReportService {
         FraudReport report = new FraudReport();
         report.setDetectedAt(LocalDateTime.now());
         report.setUserId(transaction.getUserId());
-        report.setReason(reason); // TODO Relate it OneToOne with FraudCheckResult in the model.
+        report.setReason(reason);; // TODO Relate it OneToOne with FraudCheckResult in the model.
+        report.setTransaction(transaction);
 
         return fraudReportRepository.save(report);
 
