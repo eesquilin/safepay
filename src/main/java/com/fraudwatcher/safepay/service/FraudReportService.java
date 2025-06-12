@@ -7,6 +7,8 @@ import com.fraudwatcher.safepay.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +37,13 @@ public class FraudReportService {
 
         return fraudReportRepository.save(report);
 
+    }
+
+    public Optional<FraudReport> findFraudReportById(Long id){
+        return fraudReportRepository.findById(id);
+    }
+
+    public List<FraudReport> findAllReports(){
+        return fraudReportRepository.findAll();
     }
 }

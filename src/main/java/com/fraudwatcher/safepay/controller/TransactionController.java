@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,7 +31,7 @@ public class TransactionController {
     FraudCheckService fraudCheckService;
 
     @PostMapping
-    public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<Transaction> postTransaction(@Validated @RequestBody Transaction transaction) {
         Transaction createdTransaction = transactionService.createTransaction(transaction);
         return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }
@@ -52,10 +53,10 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Transaction> getTransactionById(@PathVariable("id") Long transactionId) {
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable("id") Long transactionId) {
         Transaction transaction = transactionService.getTransactionById(transactionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found."));
-        return Optional.of(transaction);
+        return ResponseEntity.ok(transaction);
 
     }
 
