@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,7 +26,7 @@ public class FraudReportController {
     }
 
     @PostMapping // Method to create a report manually.
-    public ResponseEntity<FraudReport> createReport(Long transactionId, String reason) {
+    public ResponseEntity<FraudReport> createReport(@RequestParam Long transactionId, @RequestParam String reason) {
         FraudReport report = fraudReportService.createFraudReport(transactionId, reason);
         return new ResponseEntity<>(report, HttpStatus.CREATED);
     }
