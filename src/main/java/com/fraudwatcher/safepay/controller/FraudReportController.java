@@ -16,14 +16,7 @@ public class FraudReportController {
     FraudReportController(FraudReportService fraudReportService) {
         this.fraudReportService = fraudReportService;
     }
-/* 
-    @PostMapping
-    public ResponseEntity<FraudReport> postFraudReport(@RequestBody Long transactionId) {
-        FraudReport cReport = fraudReportService.createFraudReport(transactionId, );
-        return new ResponseEntity<FraudReport>(cReport, HttpStatus.CREATED);
 
-        
-    }*/
     
    
 

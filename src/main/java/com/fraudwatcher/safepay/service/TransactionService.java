@@ -2,6 +2,8 @@ package com.fraudwatcher.safepay.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
@@ -23,6 +25,10 @@ public class TransactionService {
 
     public List<Transaction> getAllTransactions(){
         return transactionRepository.findAll();
+    }
+
+    public Optional<Transaction> getTransactionById(Long transactionId){
+        return transactionRepository.findById(transactionId);
     }
 
     //get all transactions of a certain user
