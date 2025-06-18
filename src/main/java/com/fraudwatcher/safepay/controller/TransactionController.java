@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fraudwatcher.safepay.dto.TransactionRequestDTO;
+import com.fraudwatcher.safepay.dto.TransactionResponseDTO;
 import com.fraudwatcher.safepay.mapper.TransactionMapper;
 import com.fraudwatcher.safepay.model.FraudCheckResult;
 import com.fraudwatcher.safepay.model.Transaction;
@@ -37,10 +38,11 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> postTransaction(@Validated @RequestBody TransactionRequestDTO dto) {
+    public ResponseEntity<TransactionResponseDTO> postTransaction(@Validated @RequestBody TransactionRequestDTO dto) {
         Transaction transaction = transactionMapper.toEntity(dto);
         Transaction createdTransaction = transactionService.createTransaction(transaction);
-        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
+        TransactionResponseDTO responseDTO = transactionMapper.toResponseDto(createdTransaction);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @GetMapping
