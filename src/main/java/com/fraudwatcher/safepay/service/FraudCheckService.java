@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
 import com.fraudwatcher.safepay.model.Transaction;
+import com.fraudwatcher.safepay.model.TransactionType;
 import com.fraudwatcher.safepay.repository.FraudCheckResultRepository;
 import com.fraudwatcher.safepay.repository.TransactionRepository;
 
@@ -41,6 +42,8 @@ public class FraudCheckService {
         if (transaction.getAmount().compareTo(BigDecimal.valueOf(10000)) > 0) {
             reasonList.add("High value transaction.");
         }
+
+        
 
         // Add rules above this line
 

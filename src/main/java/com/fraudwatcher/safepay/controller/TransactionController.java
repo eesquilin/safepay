@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fraudwatcher.safepay.dto.TransactionRequestDTO;
+import com.fraudwatcher.safepay.mapper.TransactionMapper;
 import com.fraudwatcher.safepay.model.FraudCheckResult;
 import com.fraudwatcher.safepay.model.Transaction;
 import com.fraudwatcher.safepay.service.FraudCheckService;
@@ -22,14 +24,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/transactions/")
 public class TransactionController {
 
-    @Autowired
-    TransactionService transactionService;
+    final TransactionService transactionService;
 
-    @Autowired
-    FraudCheckService fraudCheckService;
+    final FraudCheckService fraudCheckService;
+
+    final TransactionMapper transactionMapper;
+
+    TransactionController(TransactionService transactionService, FraudCheckService fraudCheckService, TransactionMapper transactionMapper) {
+        this.transactionService = transactionService;
+        this.fraudCheckService = fraudCheckService;
+        this.transactionMapper = transactionMapper;
+    }
 
     @PostMapping
-    public ResponseEntity<Transaction> postTransaction(@Validated @RequestBody Transaction transaction) {
+    public ResponseEntity<Transaction> postTransaction(@Validated @RequestBody TransactionRequestDTO dto) {
+        Transaction transaction = transactionMapper.toEntity(dto);
         Transaction createdTransaction = transactionService.createTransaction(transaction);
         return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fraudwatcher.safepay.dto.TransactionRequestDTO;
 import com.fraudwatcher.safepay.model.FraudCheckResult;
 import com.fraudwatcher.safepay.model.Transaction;
 import com.fraudwatcher.safepay.model.TransactionType;
@@ -57,6 +58,8 @@ public class TransactionService {
     public List<Transaction> getByUserIdAndType(Long userId, TransactionType type) {
         return transactionRepository.findByUserIdAndType(userId, type);
     }
+
+   
 
     
 }

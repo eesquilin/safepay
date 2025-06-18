@@ -34,12 +34,12 @@ public class FraudReportController {
     @GetMapping("/{id}")
     public ResponseEntity<FraudReport> getReportById(@PathVariable("id") Long id) {
         FraudReport fraudReport = fraudReportService.findFraudReportById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report not found."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report not found."));
         return ResponseEntity.ok(fraudReport);
     }
 
     @GetMapping
-    public List<FraudReport> getAllReports(){
+    public List<FraudReport> getAllReports() {
         return fraudReportService.findAllReports();
     }
 
