@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class TransactionResponseDTO {
-    Long id;
-    Long userId;
-    BigDecimal amount;
-    LocalDateTime timestamp;
-    TransactionType type;
-    String location;
-    String merchant;
+    private Long id;
+    private Long userId;
+    private BigDecimal amount;
+    private LocalDateTime timestamp;
+    private TransactionType type;
+    private String location;
+    private String merchant;
 
 }

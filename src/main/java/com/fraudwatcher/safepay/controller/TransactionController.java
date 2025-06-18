@@ -1,7 +1,6 @@
 package com.fraudwatcher.safepay.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +29,8 @@ public class TransactionController {
 
     final TransactionMapper transactionMapper;
 
-    TransactionController(TransactionService transactionService, FraudCheckService fraudCheckService, TransactionMapper transactionMapper) {
+    TransactionController(TransactionService transactionService, FraudCheckService fraudCheckService,
+            TransactionMapper transactionMapper) {
         this.transactionService = transactionService;
         this.fraudCheckService = fraudCheckService;
         this.transactionMapper = transactionMapper;
