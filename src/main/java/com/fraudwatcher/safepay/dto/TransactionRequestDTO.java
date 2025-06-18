@@ -27,10 +27,8 @@ public class TransactionRequestDTO {
     @NotNull(message = "Transaction type is required.")
     private TransactionType type;
 
-    @NotBlank(message = "Location must be filled.")
     private String location;
 
-    @NotBlank(message = "Merchant must not be blank.")
     private String merchant;
 
 }
