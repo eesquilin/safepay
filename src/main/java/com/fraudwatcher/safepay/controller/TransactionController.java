@@ -46,13 +46,14 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    public List<TransactionResponseDTO> getAllTransactions() {
+        return transactionService.getAllTransactions().stream().map(transactionMapper::toResponseDto).toList();
     }
 
     @GetMapping("user/{userId}")
-    public List<Transaction> getTransactionByUserId(@PathVariable Long userId) {
-        return transactionService.getTransactionByUserId(userId);
+    public List<TransactionResponseDTO> getTransactionByUserId(@PathVariable Long userId) {
+        return transactionService.getTransactionByUserId(userId).stream().map(transactionMapper::toResponseDto)
+                .toList();
     }
 
     @GetMapping("{id}/fraud-check") // Method to check fraud result for an specific transaction.

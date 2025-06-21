@@ -3,6 +3,7 @@ package com.fraudwatcher.safepay.dto;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fraudwatcher.safepay.model.TransactionType;
@@ -17,6 +18,7 @@ import lombok.Setter;
 public class TransactionRequestDTO {
 
     @NotNull(message = "User Id required.")
+    @Min(1)
     private Long userId;
 
     @NotNull(message = "Amount is required.")
