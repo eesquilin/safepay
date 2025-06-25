@@ -2,6 +2,8 @@ package com.fraudwatcher.safepay.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fraudwatcher.safepay.dto.FraudReportResponseDTO;
+import com.fraudwatcher.safepay.mapper.FraudReportMapper;
 import com.fraudwatcher.safepay.model.FraudReport;
 import com.fraudwatcher.safepay.service.FraudReportService;
 
@@ -20,27 +24,32 @@ import com.fraudwatcher.safepay.service.FraudReportService;
 public class FraudReportController {
 
     final FraudReportService fraudReportService;
+    final FraudReportMapper fraudReportMapper;
 
-    FraudReportController(FraudReportService fraudReportService) {
+    FraudReportController(FraudReportService fraudReportService, FraudReportMapper fraudReportMapper) {
         this.fraudReportService = fraudReportService;
+        this.fraudReportMapper = fraudReportMapper;
     }
 
     @PostMapping // Method to create a report manually.
-    public ResponseEntity<FraudReport> createReport(@RequestParam Long transactionId, @RequestParam String reason) {
+    public ResponseEntity<FraudReportResponseDTO> createReport(@Valid @RequestParam Long transactionId,
+            @RequestParam String reason) {
         FraudReport report = fraudReportService.createFraudReport(transactionId, reason);
-        return new ResponseEntity<>(report, HttpStatus.CREATED);
+        FraudReportResponseDTO response = fraudReportMapper.toResponseDTO(report);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FraudReport> getReportById(@PathVariable("id") Long id) {
+    public ResponseEntity<FraudReportResponseDTO> getReportById(@PathVariable("id") Long id) {
         FraudReport fraudReport = fraudReportService.findFraudReportById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report not found."));
-        return ResponseEntity.ok(fraudReport);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report not found."));
+        FraudReportResponseDTO response = fraudReportMapper.toResponseDTO(fraudReport);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public List<FraudReport> getAllReports(){
-        return fraudReportService.findAllReports();
+    public List<FraudReportResponseDTO> getAllReports() {
+        return fraudReportService.findAllReports().stream().map(fraudReportMapper::toResponseDTO).toList();
     }
 
 }
