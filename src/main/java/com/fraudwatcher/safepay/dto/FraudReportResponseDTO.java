@@ -2,6 +2,8 @@ package com.fraudwatcher.safepay.dto;
 
 import java.time.LocalDateTime;
 
+import com.fraudwatcher.safepay.model.Transaction;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class FraudReportResponseDTO {
     
     private Long Id;
-    private Long transactionIdLong;
+    private Long transactionId;
     private Long userId;
     private LocalDateTime detectedAt;
     private String reason;
