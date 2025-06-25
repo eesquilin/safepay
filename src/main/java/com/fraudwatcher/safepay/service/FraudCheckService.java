@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
@@ -38,9 +40,7 @@ public class FraudCheckService {
 
         // Add rules below this line
 
-        if (transaction.getAmount().compareTo(BigDecimal.valueOf(10000)) > 0) {
-            reasonList.add("High value transaction.");
-        }
+       checkHighValue(transaction).ifPresent(reasonList::add);
 
         // Add rules above this line
 
@@ -59,4 +59,11 @@ public class FraudCheckService {
 
     }
 
+    private Optional<String> checkHighValue(Transaction transaction){
+        BigDecimal threshold = BigDecimal.valueOf(10000);
+        if (transaction.getAmount().compareTo(threshold) > 0) {
+            return Optional.of("Transaction amount exceeds high value threshold of " + threshold);
+        }
+        return Optional.empty();
+    }
 }
