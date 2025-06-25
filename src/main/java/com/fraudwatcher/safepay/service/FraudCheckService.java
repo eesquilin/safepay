@@ -25,7 +25,12 @@ public class FraudCheckService {
 
     final FraudReportService fraudReportService;
 
+    // Used for the high risk location rule. Can implement a enum later?
     private static final Set<String> HIGH_RISK_LOCATIONS = Set.of("Iran", "Nigeria", "China");
+
+    //var used for rapid fire transactions rule. 
+    private static final int maxTransactionsPerMinute = 3;
+    private static final int windowMinutes = 1;
 
     FraudCheckService(FraudReportService fraudReportService, TransactionRepository transactionRepository,
             FraudCheckResultRepository fraudCheckRepository) {
@@ -46,6 +51,7 @@ public class FraudCheckService {
 
         checkHighValue(transaction).ifPresent(reasonList::add);
         checkHighRiskLocation(transaction).ifPresent(reasonList::add);
+        checkRapidFireTransaction(transaction).ifPresent(reasonList::add);
 
         // Add rules above this line
 
@@ -66,7 +72,7 @@ public class FraudCheckService {
 
     }
 
-    //private methods to implement potential fraud rules. 
+    // private helper methods to implement potential fraud rules.
 
     private Optional<String> checkHighValue(Transaction transaction) {
         BigDecimal threshold = BigDecimal.valueOf(10000);
@@ -76,7 +82,7 @@ public class FraudCheckService {
         return Optional.empty();
     }
 
-    private Optional<String> checkHighRiskLocation(Transaction transaction){
+    private Optional<String> checkHighRiskLocation(Transaction transaction) {
         String location = transaction.getLocation();
         if (location != null & HIGH_RISK_LOCATIONS.contains(location.trim())) {
             return Optional.of("Transaction originates from high-risk location: " + location);
@@ -84,5 +90,14 @@ public class FraudCheckService {
         return Optional.empty();
     }
 
+    private Optional<String> checkRapidFireTransaction(Transaction transaction){
+        LocalDateTime windowStarTime = transaction.getTimestamp().minusMinutes(windowMinutes);
+        List<Transaction> recentTransactions = transactionRepository.findByUserIdAndTimestampBetween(transaction.getUserId(), windowStarTime, transaction.getTimestamp());
+
+        if (recentTransactions.size() >= maxTransactionsPerMinute) {
+            return Optional.of("Rapid-fire activity detected: " + recentTransactions.size() + "transactions within " + windowMinutes + "minute(s).");
+        }
+        return Optional.empty();
+    }
 
 }
