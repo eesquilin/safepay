@@ -63,10 +63,11 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable("id") Long transactionId) {
+    public ResponseEntity<TransactionResponseDTO> getTransactionById(@PathVariable("id") Long transactionId) {
         Transaction transaction = transactionService.getTransactionById(transactionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found."));
-        return ResponseEntity.ok(transaction);
+        TransactionResponseDTO responseDTO = transactionMapper.toResponseDto(transaction);
+        return ResponseEntity.ok(responseDTO);
 
     }
 
