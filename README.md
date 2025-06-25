@@ -1,6 +1,6 @@
 # SafePay
 
-SafePay is a work-in-progress Spring Boot application designed to monitor, analyze, and report potentially fraudulent financial transactions.
+SafePay is a work-in-progress Spring Boot application for monitoring, analyzing, and reporting potentially fraudulent financial transactions.
 
 ## Tech Stack
 
@@ -9,7 +9,7 @@ SafePay is a work-in-progress Spring Boot application designed to monitor, analy
 - **Spring Data JPA**
 - **H2 In-Memory Database** (for development/testing)
 - **Lombok** (for boilerplate code reduction)
-- **Jakarta Persistence API (JPA)**
+- **Jakarta Validation**
 - **Maven** (build tool)
 - **RESTful API** (Spring Web)
 
@@ -18,10 +18,11 @@ SafePay is a work-in-progress Spring Boot application designed to monitor, analy
 - **Transaction Management**
   - Create and store transactions with details such as user, amount, type, location, and merchant.
   - Retrieve all transactions or filter by user and type.
+  - Retrieve a transaction by its ID.
 
 - **Fraud Detection**
   - Automatic fraud checks on new transactions using configurable rules (e.g., high-value transaction detection).
-  - Store and retrieve fraud check results.
+  - Retrieve fraud check results for a specific transaction.
 
 - **Fraud Reporting**
   - Manual reporting of suspicious transactions.
@@ -38,12 +39,26 @@ SafePay is a work-in-progress Spring Boot application designed to monitor, analy
 - `GET /api/transactions/user/{userId}`  
   Retrieve all transactions for a specific user.
 
+- `GET /api/transactions/{id}`  
+  Retrieve a transaction by its ID.
+
+- `GET /api/transactions/{id}/fraud-check`  
+  Get fraud check result for a specific transaction.
+
+- `POST /api/fraud-reports`  
+  Manually create a fraud report for a transaction.
+
+- `GET /api/fraud-reports/{id}`  
+  Retrieve a fraud report by its ID.
+
 ## Project Structure
 
 - `model/` – JPA entities (Transaction, FraudCheckResult, FraudReport, etc.)
 - `repository/` – Spring Data JPA repositories
 - `service/` – Business logic and fraud detection rules
 - `controller/` – REST API endpoints
+- `dto/` – Data Transfer Objects for API requests/responses
+- `mapper/` – Mapping logic between DTOs and entities
 
 ## Status
 
@@ -52,5 +67,5 @@ Core transaction and fraud detection logic is implemented, but features and rule
 
 ---
 
->[!NOTE]
->This project uses an in-memory H2 database by default. All data is lost on restart.
+**Note:**  
+This project uses an in-memory H2 database by default. All data is lost
