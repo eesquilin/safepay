@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,10 @@ public class FraudCheckService {
 
     final FraudReportService fraudReportService;
 
-    FraudCheckService(FraudReportService fraudReportService, TransactionRepository transactionRepository, FraudCheckResultRepository fraudCheckRepository) {
+    private static final Set<String> HIGH_RISK_LOCATIONS = Set.of("Iran", "Nigeria", "China");
+
+    FraudCheckService(FraudReportService fraudReportService, TransactionRepository transactionRepository,
+            FraudCheckResultRepository fraudCheckRepository) {
         this.fraudReportService = fraudReportService;
         this.transactionRepository = transactionRepository;
         this.fraudCheckRepository = fraudCheckRepository;
@@ -40,7 +44,8 @@ public class FraudCheckService {
 
         // Add rules below this line
 
-       checkHighValue(transaction).ifPresent(reasonList::add);
+        checkHighValue(transaction).ifPresent(reasonList::add);
+        checkHighRiskLocation(transaction).ifPresent(reasonList::add);
 
         // Add rules above this line
 
@@ -53,17 +58,31 @@ public class FraudCheckService {
 
         fraudCheckRepository.save(result);
 
-        if (result.isFraud()){fraudReportService.createFraudReport( transactionId, String.valueOf(reasonList));}
+        if (result.isFraud()) {
+            fraudReportService.createFraudReport(transactionId, String.valueOf(reasonList));
+        }
 
         return result;
 
     }
 
-    private Optional<String> checkHighValue(Transaction transaction){
+    //private methods to implement potential fraud rules. 
+
+    private Optional<String> checkHighValue(Transaction transaction) {
         BigDecimal threshold = BigDecimal.valueOf(10000);
         if (transaction.getAmount().compareTo(threshold) > 0) {
             return Optional.of("Transaction amount exceeds high value threshold of " + threshold);
         }
         return Optional.empty();
     }
+
+    private Optional<String> checkHighRiskLocation(Transaction transaction){
+        String location = transaction.getLocation();
+        if (location != null & HIGH_RISK_LOCATIONS.contains(location.trim())) {
+            return Optional.of("Transaction originates from high-risk location: " + location);
+        }
+        return Optional.empty();
+    }
+
+
 }
