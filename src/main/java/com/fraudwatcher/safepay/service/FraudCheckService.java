@@ -95,7 +95,7 @@ public class FraudCheckService {
         List<Transaction> recentTransactions = transactionRepository.findByUserIdAndTimestampBetween(transaction.getUserId(), windowStarTime, transaction.getTimestamp());
 
         if (recentTransactions.size() >= maxTransactionsPerMinute) {
-            return Optional.of("Rapid-fire activity detected: " + recentTransactions.size() + "transactions within " + windowMinutes + "minute(s).");
+            return Optional.of("Rapid-fire activity detected: " + recentTransactions.size() + " transactions within " + windowMinutes + " minute(s).");
         }
         return Optional.empty();
     }
