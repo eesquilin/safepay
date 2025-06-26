@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Size;
 import com.fraudwatcher.safepay.model.TransactionType;
 
 import lombok.Getter;
@@ -28,8 +29,12 @@ public class TransactionRequestDTO {
     @NotNull(message = "Transaction type is required.")
     private TransactionType type;
     
+    @Size(max = 100, message = "Location must be 100 characters.")
+    @NotBlank
     private String location;
 
+    @Size(max = 100, message = "Location must be 100 characters.")
+    @NotBlank
     private String merchant;
 
 }
