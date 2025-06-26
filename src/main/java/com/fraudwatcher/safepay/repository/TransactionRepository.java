@@ -2,8 +2,8 @@ package com.fraudwatcher.safepay.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,14 +11,15 @@ import com.fraudwatcher.safepay.model.Transaction;
 import com.fraudwatcher.safepay.model.TransactionType;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long>{
-    
-    List<Transaction> findByUserId(Long userId);
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end);
+    Page<Transaction> findByUserId(Long userId, Pageable pageable);
 
-    List<Transaction> findByUserIdAndAmountBetween(Long userId, BigDecimal min, BigDecimal max);
+    Page<Transaction> findByUserIdAndTimestampBetween(Long userId, LocalDateTime start, LocalDateTime end,
+            Pageable pageable);
 
-    List<Transaction> findByUserIdAndType(Long userId, TransactionType type);
-    
+    Page<Transaction> findByUserIdAndAmountBetween(Long userId, BigDecimal min, BigDecimal max, Pageable pageable);
+
+    Page<Transaction> findByUserIdAndType(Long userId, TransactionType type, Pageable pageable);
+
 }

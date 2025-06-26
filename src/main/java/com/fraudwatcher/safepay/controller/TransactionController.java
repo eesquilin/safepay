@@ -1,6 +1,10 @@
 package com.fraudwatcher.safepay.controller;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,9 +56,8 @@ public class TransactionController {
     }
 
     @GetMapping("user/{userId}")
-    public List<TransactionResponseDTO> getTransactionByUserId(@PathVariable Long userId) {
-        return transactionService.getTransactionByUserId(userId).stream().map(transactionMapper::toResponseDto)
-                .toList();
+    public Page<TransactionResponseDTO> getTransactionByUserId(@PathVariable Long userId, Pageable pageable) {
+        return transactionService.getTransactionByUserId(userId, pageable).map(transactionMapper::toResponseDto);
     }
 
     @GetMapping("{id}/fraud-check") // Method to check fraud result for an specific transaction.
