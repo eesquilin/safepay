@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
@@ -32,8 +34,8 @@ public class TransactionService {
     }
 
     // get all transactions of a certain user
-    public List<Transaction> getTransactionByUserId(Long userId) {
-        return transactionRepository.findByUserId(userId);
+    public Page<Transaction> getTransactionByUserId(Long userId, Pageable pageable) {
+        return transactionRepository.findByUserId(userId, pageable);
     }
 
     // method to create transaction and detect possible fraud during transaction
@@ -53,8 +55,8 @@ public class TransactionService {
     }
 
     // get transactions by user and transaction type
-    public List<Transaction> getByUserIdAndType(Long userId, TransactionType type) {
-        return transactionRepository.findByUserIdAndType(userId, type);
+    public Page<Transaction> getByUserIdAndType(Long userId, TransactionType type, Pageable pageable) {
+        return transactionRepository.findByUserIdAndType(userId, type, pageable);
     }
 
 }

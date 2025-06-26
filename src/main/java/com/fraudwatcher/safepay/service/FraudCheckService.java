@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fraudwatcher.safepay.model.FraudCheckResult;
 import com.fraudwatcher.safepay.model.Transaction;
-import com.fraudwatcher.safepay.model.TransactionType;
 import com.fraudwatcher.safepay.repository.FraudCheckResultRepository;
 import com.fraudwatcher.safepay.repository.TransactionRepository;
 
@@ -87,7 +89,7 @@ public class FraudCheckService {
 
     private Optional<String> checkHighRiskLocation(Transaction transaction) {
         String location = transaction.getLocation();
-        if (location != null & HIGH_RISK_LOCATIONS.contains(location.trim())) {
+        if (location != null && HIGH_RISK_LOCATIONS.contains(location.trim())) {
             return Optional.of("Transaction originates from high-risk location: " + location);
         }
         return Optional.empty();
@@ -95,10 +97,11 @@ public class FraudCheckService {
 
     private Optional<String> checkRapidFireTransaction(Transaction transaction){
         LocalDateTime windowStarTime = transaction.getTimestamp().minusMinutes(windowMinutes);
-        List<Transaction> recentTransactions = transactionRepository.findByUserIdAndTimestampBetween(transaction.getUserId(), windowStarTime, transaction.getTimestamp());
+        Pageable pageable = PageRequest.of(0, 100);
+        Page<Transaction> recentTransactions = transactionRepository.findByUserIdAndTimestampBetween(transaction.getUserId(), windowStarTime, transaction.getTimestamp(), pageable );
 
-        if (recentTransactions.size() >= maxTransactionsPerMinute) {
-            return Optional.of("Rapid-fire activity detected: " + recentTransactions.size() + " transactions within " + windowMinutes + " minute(s).");
+        if (recentTransactions.getTotalElements() >= maxTransactionsPerMinute) {
+            return Optional.of("Rapid-fire activity detected: " + recentTransactions.getSize() + " transactions within " + windowMinutes + " minute(s).");
         }
         return Optional.empty();
     }

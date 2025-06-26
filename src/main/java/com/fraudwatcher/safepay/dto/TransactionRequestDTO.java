@@ -27,7 +27,7 @@ public class TransactionRequestDTO {
 
     @NotNull(message = "Transaction type is required.")
     private TransactionType type;
-
+    
     private String location;
 
     private String merchant;
