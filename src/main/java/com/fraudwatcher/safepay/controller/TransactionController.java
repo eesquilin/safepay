@@ -2,11 +2,12 @@ package com.fraudwatcher.safepay.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,7 +43,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionResponseDTO> postTransaction(@Validated @RequestBody TransactionRequestDTO dto) {
+    public ResponseEntity<TransactionResponseDTO> postTransaction(@Valid @RequestBody TransactionRequestDTO dto) {
         Transaction transaction = transactionMapper.toEntity(dto);
         Transaction createdTransaction = transactionService.createTransaction(transaction);
         TransactionResponseDTO responseDTO = transactionMapper.toResponseDto(createdTransaction);
