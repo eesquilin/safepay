@@ -1,6 +1,9 @@
 # SafePay
 
-SafePay is a work-in-progress Spring Boot application for monitoring, analyzing, and reporting potentially fraudulent financial transactions.
+SafePay is a Spring Boot application for monitoring, analyzing, and reporting potentially fraudulent financial transactions.  
+It provides a RESTful API for transaction management, fraud detection, and fraud reporting.
+
+---
 
 ## Tech Stack
 
@@ -9,24 +12,31 @@ SafePay is a work-in-progress Spring Boot application for monitoring, analyzing,
 - **Spring Data JPA**
 - **H2 In-Memory Database** (for development/testing)
 - **Lombok** (for boilerplate code reduction)
-- **Jakarta Validation**
+- **Jakarta Validation** (for DTO validation)
 - **Maven** (build tool)
 - **RESTful API** (Spring Web)
 
-## Main Features (in progress)
+---
 
-- **Transaction Management**
-  - Create and store transactions with details such as user, amount, type, location, and merchant.
-  - Retrieve all transactions or filter by user and type.
-  - Retrieve a transaction by its ID.
+## Main Features
 
-- **Fraud Detection**
-  - Automatic fraud checks on new transactions using configurable rules (e.g., high-value transaction detection).
-  - Retrieve fraud check results for a specific transaction.
+### Transaction Management
+- Create and store transactions with details such as user, amount, type, location, and merchant.
+- Retrieve all transactions or filter by user.
+- Pagination support for transaction queries.
 
-- **Fraud Reporting**
-  - Manual reporting of suspicious transactions.
-  - Store and retrieve fraud reports.
+### Fraud Detection
+- Automatic fraud checks on new transactions using configurable rules:
+  - High-value transaction detection
+  - High-risk location detection
+  - Rapid-fire transaction detection
+- Retrieve fraud check results for a specific transaction.
+
+### Fraud Reporting
+- Manual reporting of suspicious transactions.
+- Store and retrieve fraud reports.
+
+---
 
 ## Example API Endpoints
 
@@ -37,10 +47,7 @@ SafePay is a work-in-progress Spring Boot application for monitoring, analyzing,
   Retrieve all transactions.
 
 - `GET /api/transactions/user/{userId}`  
-  Retrieve all transactions for a specific user.
-
-- `GET /api/transactions/{id}`  
-  Retrieve a transaction by its ID.
+  Retrieve all transactions for a specific user (with pagination).
 
 - `GET /api/transactions/{id}/fraud-check`  
   Get fraud check result for a specific transaction.
@@ -48,8 +55,18 @@ SafePay is a work-in-progress Spring Boot application for monitoring, analyzing,
 - `POST /api/fraud-reports`  
   Manually create a fraud report for a transaction.
 
-- `GET /api/fraud-reports/{id}`  
-  Retrieve a fraud report by its ID.
+---
+
+## DTO Validation
+
+All incoming requests for creating transactions are validated using Jakarta Bean Validation annotations.  
+Example for `TransactionRequestDTO`:
+- `userId`: must not be null and must be >= 1
+- `amount`: must not be null and must be >= 0.01
+- `type`: must not be null
+- `location` and `merchant`: must not be blank and max 100 characters
+
+---
 
 ## Project Structure
 
@@ -59,6 +76,8 @@ SafePay is a work-in-progress Spring Boot application for monitoring, analyzing,
 - `controller/` – REST API endpoints
 - `dto/` – Data Transfer Objects for API requests/responses
 - `mapper/` – Mapping logic between DTOs and entities
+
+---
 
 ## Status
 

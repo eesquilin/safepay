@@ -2,8 +2,6 @@ package com.fraudwatcher.safepay.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +16,8 @@ import com.fraudwatcher.safepay.dto.FraudReportResponseDTO;
 import com.fraudwatcher.safepay.mapper.FraudReportMapper;
 import com.fraudwatcher.safepay.model.FraudReport;
 import com.fraudwatcher.safepay.service.FraudReportService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/fraud-reports")
