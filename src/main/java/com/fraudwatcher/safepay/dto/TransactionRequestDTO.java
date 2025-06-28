@@ -23,7 +23,7 @@ public class TransactionRequestDTO {
     private Long userId;
 
     @NotNull(message = "Amount is required.")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0.") // TODO Need to verify validation of min value
+    @DecimalMin(value = "0.01", message = "Amount must be greater than 0.") 
     private BigDecimal amount;
 
     @NotNull(message = "Transaction type is required.")

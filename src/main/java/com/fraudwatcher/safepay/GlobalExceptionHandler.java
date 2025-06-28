@@ -3,7 +3,6 @@ package com.fraudwatcher.safepay;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
