@@ -1,11 +1,17 @@
-# SafePay
+# 🚦 SafePay
+
+[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Build](https://img.shields.io/badge/Build-Maven-yellow.svg)](https://maven.apache.org/)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active%20development-orange.svg)]()
 
 SafePay is a Spring Boot application for monitoring, analyzing, and reporting potentially fraudulent financial transactions.  
 It provides a RESTful API for transaction management, fraud detection, and fraud reporting.
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Java 17+**
 - **Spring Boot 3**
@@ -14,22 +20,22 @@ It provides a RESTful API for transaction management, fraud detection, and fraud
 - **Lombok** (for boilerplate code reduction)
 - **Jakarta Validation** (for DTO validation)
 - **Maven** (build tool)
-- **RESTful API** (Spring Web)
+- **Spring Web** (RESTful API)
 
 ---
 
-## Main Features
+## ✨ Main Features
 
 ### Transaction Management
-- Create and store transactions with details such as user, amount, type, location, and merchant.
+- Create and store transactions with user, amount, type, location, and merchant details.
 - Retrieve all transactions or filter by user.
 - Pagination support for transaction queries.
 
 ### Fraud Detection
 - Automatic fraud checks on new transactions using configurable rules:
-  - High-value transaction detection
-  - High-risk location detection
-  - Rapid-fire transaction detection
+  - **High-value transaction detection**
+  - **High-risk location detection**
+  - **Rapid-fire transaction detection**
 - Retrieve fraud check results for a specific transaction.
 
 ### Fraud Reporting
@@ -38,7 +44,7 @@ It provides a RESTful API for transaction management, fraud detection, and fraud
 
 ---
 
-## Example API Endpoints
+## 📚 Example API Endpoints
 
 - `POST /api/transactions/`  
   Create a new transaction (fraud check is performed automatically).
@@ -57,18 +63,19 @@ It provides a RESTful API for transaction management, fraud detection, and fraud
 
 ---
 
-## DTO Validation
+## ✅ DTO Validation
 
-All incoming requests for creating transactions are validated using Jakarta Bean Validation annotations.  
-Example for `TransactionRequestDTO`:
-- `userId`: must not be null and must be >= 1
-- `amount`: must not be null and must be >= 0.01
+All incoming requests for creating transactions are validated using Jakarta Bean Validation annotations.
+
+**Example for `TransactionRequestDTO`:**
+- `userId`: must not be null and must be ≥ 1
+- `amount`: must not be null and must be ≥ 0.01
 - `type`: must not be null
 - `location` and `merchant`: must not be blank and max 100 characters
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 - `model/` – JPA entities (Transaction, FraudCheckResult, FraudReport, etc.)
 - `repository/` – Spring Data JPA repositories
@@ -79,12 +86,12 @@ Example for `TransactionRequestDTO`:
 
 ---
 
-## Status
+## 🚧 Status
 
 This project is under active development.  
 Core transaction and fraud detection logic is implemented, but features and rules are being expanded.
 
 ---
 
-**Note:**  
-This project uses an in-memory H2 database by default. All data is lost
+> **Note:**  
+> This project uses an in-memory H2 database by default. All data is lost on restart.
