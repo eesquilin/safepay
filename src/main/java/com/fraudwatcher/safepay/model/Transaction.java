@@ -3,6 +3,7 @@ package com.fraudwatcher.safepay.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.NonNull;
 
 import jakarta.persistence.Entity;
@@ -27,10 +28,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NonNull
+    @NotNull
     private Long userId;
     
-    @NonNull
+    @NotNull
     private BigDecimal amount;
     
     private LocalDateTime timestamp;
